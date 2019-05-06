@@ -1,15 +1,19 @@
 from todo import TodoItem, test as test_item
 from user import User, test as test_user
 from todo_service import create as create_item, read, delete_all, delete
-from user_service import create_user
+from user_service import create_user, get_user
+from utility import read_word
 from pymongo import MongoClient
+from collections import deque
 
-def help_fn(curUser):
+# args not needed, but used for the same interface with the rest
+def help_fn(curUser, db, inputs):
     print("The following operations are supported: ")
     for op in commands.keys():
         print(op)
         if op in descriptions:
             print('\t' + descriptions[op])
+    return inputs
 
 commands = {
         "create": create_item,
@@ -30,26 +34,32 @@ descriptions = {
 operations = '\n'.join(list(commands.keys()))
 
 def main():
-    username = input("who are you? ")
-    user = users.find_one({"name": username})
-    if not user:
-        make_new = input("not a known user, would you like to make a new one? ")
+    inputs = deque()
+    username = read_word(inputs, "who are you? ")
+    user = get_user(username, db)
+    while(not user):
+        make_new = read_word(inputs, "not a known user, would you like to make a new one? ")
         if make_new == 'yes' or make_new == 'y':
-            create_user(username)
+            create_user(username, db, make_new)
+            user = get_user(username, db)
     print('For help, just type "help"')
     while(True):
-        command = input("what do you want to do today? ")
+        command = read_word(inputs, "what do you want to do today? ")
         if command == "quit":
             break
         elif command not in commands:
             print("error! " + command + " not recognized")
         else:
-            commands[command](user, db)
-            user = users.find_one({"name": username})
+            inputs = commands[command](user, db, inputs) #pass along rest of the inputs
+            user = get_user(username, db)
 
 
 if __name__ == "__main__":
     client = MongoClient()
     db = client.database
     users = db.users
-    main()
+    try:
+        main()
+    except:
+        pass
+
