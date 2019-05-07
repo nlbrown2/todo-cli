@@ -57,7 +57,7 @@ def main():
 
 
 if __name__ == "__main__":
-    client = MongoClient()
+    client = MongoClient(host="mongo", port=27017)
     db = client.database
     users = db.users
     try:

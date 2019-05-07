@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+    - "27017:27017"
+
+  todo-cli:
+    build: .
+    image: todo-cli
+    stdin_open: true
+    tty: true
+    depends_on:
+      - mongo
