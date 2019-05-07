@@ -1,6 +1,5 @@
 # each user has a name and an ID
 # if id is none, it hasn't been given one yet
-kItemKey = "todoItems"
 class User:
     def __init__(self, name_):
         self.name = name_

@@ -16,7 +16,7 @@ def create(curUser, db, inputs):
     return deque() #clears out input always
 
 def read(curUser, db, inputs):
-    for item in curUser[kItemKey]:
+    for item in sorted(curUser[kItemKey], key = lambda i: i[kItemNameKey]):
         print(item[kItemNameKey])
     return inputs
 

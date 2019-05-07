@@ -7,7 +7,6 @@ class TodoItem:
     def __init__(self, name_, userId_):
         self.name = name_
         self.userId = userId_
-        print("item made")
 
     def getName(self):
         return self.name
