@@ -1,6 +1,6 @@
 from todo import TodoItem, test as test_item
 from user import User, test as test_user
-from todo_service import create as create_item, read, delete_all, delete
+from todo_service import create as create_item, read, delete_all, delete, edit
 from user_service import create_user, get_user
 from utility import read_word
 from pymongo import MongoClient
@@ -20,6 +20,7 @@ commands = {
         "read": read,
         "delete": delete,
         "clear": delete_all,
+        "edit": edit,
         "help": help_fn
         }
 
@@ -28,6 +29,7 @@ descriptions = {
         "read": "List all of your todo items",
         "delete": "Delete a todo item",
         "clear": "Delete all todo items",
+        "edit": "change the name of an existing todo item",
         "help": "View available commands"
         }
 
@@ -60,6 +62,6 @@ if __name__ == "__main__":
     users = db.users
     try:
         main()
-    except:
-        pass
+    except Exception as e:
+        print(e)
 

@@ -2,7 +2,7 @@
 # TODO: give each item a priority
 # TODO: make each item allow for infinite nesting
     # allows for checklists/ordered steps
-kItemNameKey = "name";
+kItemNameKey = "name"
 class TodoItem:
     def __init__(self, name_, userId_):
         self.name = name_
