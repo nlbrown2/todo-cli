@@ -1,21 +1,31 @@
-# each user has a name and an ID
-# if id is none, it hasn't been given one yet
+"""
+User model to be stored in DB
+"""
+ADMIN_KEY = "admin"
 class User:
+    """
+    each user has a name, admin bool and a DB provided ID
+    if id is none, then it hasn't been inserted/read from the DB yet
+    """
     def __init__(self, name_):
         self.name = name_
-        self.todoItems = []
+        self.admin = False
+        self.todo_items = []
 
-    def addItem(self, item):
-        self.todoItems.append(item)
+    def add_item(self, item):
+        """ adds item to todo_items """
+        self.todo_items.append(item)
 
-    def removeItem(self, item):
-        self.todoItems.remove(item)
+    def remove_item(self, item):
+        """ removes item from todo_items """
+        self.todo_items.remove(item)
 
 
 def test():
-    u = User("User1")
-    u.addItem(1)
-    u.removeItem(1)
+    """ a small test helper for the User class """
+    user = User("User1")
+    user.add_item(1)
+    user.remove_item(1)
     print("works")
 
 if __name__ == "__main__":
